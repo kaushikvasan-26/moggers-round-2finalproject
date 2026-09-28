@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRM IST Free Room Finder</title>
+  <meta name="description"
+    content="Find empty, available classrooms at SRM IST Trichy right now — floor-by-floor live tracker with AI-powered smart search." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect width="44" height="44" rx="11" fill="url(#hg)" />
+            <path d="M10 14h24M10 22h16M10 30h20" stroke="#fff" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="34" cy="28" r="7" fill="#0f0f1a" stroke="url(#hg2)" stroke-width="2" />
+            <path d="M31.5 28l1.5 1.5L36 26" stroke="#4ade80" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="hg" x1="0" y1="0" x2="44" y2="44">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#a855f7" />
+              </linearGradient>
+              <linearGradient id="hg2" x1="27" y1="21" x2="41" y2="35">
+                <stop stop-color="#4ade80" />
+                <stop offset="1" stop-color="#22d3ee" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">RoomRadar</span>
+          <span class="logo-sub">SRM IST Trichy · Free Room Finder</span>
+        </div>
+      </div>
+
+      <div class="header-clock" id="header-clock" aria-live="polite" aria-label="Current time">
+        <span class="clock-icon">🕐</span>
+        <span id="clock-time">--:--</span>
+        <span id="clock-day" class="clock-day">---</span>
+      </div>
+
+      <div class="header-free-count">
+        <span class="free-count-num" id="free-count-num">–</span>
+        <span class="free-count-label">rooms free now</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-blobs" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="pulse-dot"></span>
+        Live Room Availability
+      </div>
+      <h1 class="hero-h1">Find a free room<br /><span class="gradient-text">in seconds.</span></h1>
+      <p class="hero-sub">No more wandering three floors. See every empty classroom right now — organized floor by floor
+        — and use AI to find exactly what you need.</p>
+
+      <!-- ─── TIME OVERRIDE ─── -->
+      <div class="time-override-card" id="time-override-card">
+        <div class="toc-label">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4" />
+            <path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+          Check a different time
+        </div>
+        <div class="toc-inputs">
+          <select id="time-day" aria-label="Select day" class="toc-select">
+            <option value="0">Monday</option>
+            <option value="1">Tuesday</option>
+            <option value="2">Wednesday</option>
+            <option value="3">Thursday</option>
+            <option value="4">Friday</option>
+          </select>
+          <input type="time" id="time-input" class="toc-time" value="09:00" aria-label="Select time" />
+          <button id="use-now-btn" class="toc-now-btn">Use Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ AI SEARCH ═══ -->
+  <section class="ai-section" id="ai-section">
+    <div class="container">
+      <div class="ai-card">
+        <div class="ai-card-header">
+          <div class="ai-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M11 2L13.5 8.5H20L14.5 12.5L16.5 19L11 15L5.5 19L7.5 12.5L2 8.5H8.5L11 2Z" fill="url(#aiStar)" />
+              <defs>
+                <linearGradient id="aiStar" x1="2" y1="2" x2="20" y2="20">
+                  <stop stop-color="#a78bfa" />
+                  <stop offset="1" stop-color="#38bdf8" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <h2 class="ai-card-title">AI Room Finder</h2>
+            <p class="ai-card-sub">Type what you need — the AI will do the rest</p>
+          </div>
+          <button class="api-key-toggle" id="api-key-toggle" title="Set Gemini API Key" aria-label="Configure API key">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 10.5a4 4 0 100-8 4 4 0 000 8zM10.5 10.5L14 14" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" />
+            </svg>
+            API Key
+          </button>
+        </div>
+
+        <!-- API Key Input (hidden by default) -->
+        <div class="api-key-row hidden" id="api-key-row">
+          <input type="password" id="api-key-input" class="api-key-field" placeholder="Paste your Gemini API key here…"
+            autocomplete="off" />
+          <button class="api-key-save" id="api-key-save">Save</button>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="api-key-get">Get key
+            →</a>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="ai-search-bar">
+          <div class="ai-search-input-wrap">
+            <svg class="ai-search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.6" />
+              <path d="M12 12l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <input type="text" id="ai-query" class="ai-input"
+              placeholder='e.g. "I need a quiet room on the 5th floor for 2 hours"'
+              aria-label="Describe what room you need" />
+            <button class="ai-send-btn" id="ai-send-btn" aria-label="Search with AI">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M2 9h14M10 4l6 5-6 5" stroke="white" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+          <div class="ai-chips">
+            <button class="ai-chip" data-query="I need a room on the 6th floor for 2 hours">6th Floor, 2 hrs</button>
+            <button class="ai-chip" data-query="Find me an empty lab right now">Empty lab now</button>
+            <button class="ai-chip" data-query="I need a quiet room for my project group for 3 hours">Project group 3
+              hrs</button>
+            <button class="ai-chip" data-query="What rooms are free after lunch until 4pm?">Free after lunch</button>
+          </div>
+        </div>
+
+        <!-- AI Response -->
+        <div class="ai-response hidden" id="ai-response">
+          <div class="ai-response-header">
+            <span class="ai-response-label">AI Recommendation</span>
+            <button class="ai-clear-btn" id="ai-clear-btn">✕ Clear</button>
+          </div>
+          <div class="ai-response-body" id="ai-response-body"></div>
+        </div>
+
+        <!-- AI Loading -->
+        <div class="ai-loading hidden" id="ai-loading">
+          <div class="ai-loading-dots"><span></span><span></span><span></span></div>
+          <span>Analyzing timetables…</span>
+        </div>
+
+        <!-- API Key Warning -->
+        <div class="api-warning hidden" id="api-warning">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2L15 14H1L8 2Z" stroke="currentColor" stroke-width="1.4" />
+            <path d="M8 6v4M8 11.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+          Please set your Gemini API key first — click "API Key" above.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FLOOR GRID ═══ -->
+  <section class="floor-section" id="floor-section">
+    <div class="container">
+      <div class="floor-section-header">
+        <div>
+          <h2 class="section-title">Floor-by-Floor Availability</h2>
+          <p class="section-sub" id="floor-subtitle">Rooms across all floors right now</p>
+        </div>
+        <div class="view-and-filter-controls">
+          <div class="view-toggle-bar">
+            <button class="view-btn active" id="view-mode-3d">3D Map</button>
+            <button class="view-btn" id="view-mode-grid">Grid View</button>
+          </div>
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all" id="filter-all">All Rooms</button>
+            <button class="filter-btn" data-filter="free" id="filter-free">
+              <span class="dot-green"></span>Free Only
+            </button>
+            <button class="filter-btn" data-filter="busy" id="filter-busy">
+              <span class="dot-red"></span>Occupied
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Map Wrapper -->
+      <div class="map-3d-wrapper" id="map-3d-view-wrapper">
+        <div class="map-3d-controls">
+          <div class="floor-selector-pills">
+            <button class="floor-pill active" data-floor="all">All Floors</button>
+            <button class="floor-pill" data-floor="1">1</button>
+            <button class="floor-pill" data-floor="2">2</button>
+            <button class="floor-pill" data-floor="3">3</button>
+            <button class="floor-pill" data-floor="4">4</button>
+            <button class="floor-pill" data-floor="5">5</button>
+            <button class="floor-pill" data-floor="6">6</button>
+            <button class="floor-pill" data-floor="7">7</button>
+            <button class="floor-pill" data-floor="G">G</button>
+            <button class="floor-pill" data-floor="H">H</button>
+            <button class="floor-pill" data-floor="W">W</button>
+          </div>
+          <div class="map-perspective-controls">
+            <button class="cam-btn active" id="cam-reset">Isometric</button>
+            <button class="cam-btn" id="cam-flat">Top Down</button>
+          </div>
+        </div>
+        <div class="map-3d-stage-viewport" id="map-3d-stage-viewport">
+          <div class="map-3d-building-stack" id="map-3d-building-stack">
+            <!-- Slabs generated here -->
+          </div>
+        </div>
+      </div>
+
+      <div id="floor-grid" class="hidden"></div>
+    </div>
+  </section>
+
+  <!-- ═══ LEGEND ═══ -->
+  <section class="legend-section">
+    <div class="container">
+      <div class="legend-bar">
+        <div class="legend-item"><span class="dot-green"></span> Free – no class scheduled</div>
+        <div class="legend-item"><span class="dot-red"></span> Occupied – class in progress</div>
+        <div class="legend-item"><span class="dot-yellow"></span> Break / Lunch window</div>
+        <div class="legend-item"><span class="dot-gray"></span> Weekend / Outside hours</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ROOM MODAL ═══ -->
+  <div class="modal-backdrop hidden" id="room-modal-backdrop">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn">✕</button>
+      
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <h3 class="modal-room-name" id="modal-room-name"></h3>
+          <span class="modal-status-badge" id="modal-status-badge"></span>
+        </div>
+        <div class="modal-room-meta" id="modal-room-meta"></div>
+      </div>
+
+      <div class="countdown-card">
+        <div class="countdown-header-label" id="countdown-label">TIME REMAINING</div>
+        <div class="countdown-digits-wrap">
+          <div class="countdown-digit-box">
+            <span class="cd-num" id="cd-hours">00</span>
+            <span class="cd-unit">HRS</span>
+          </div>
+          <span class="cd-colon">:</span>
+          <div class="countdown-digit-box">
+            <span class="cd-num" id="cd-mins">00</span>
+            <span class="cd-unit">MIN</span>
+          </div>
+          <span class="cd-colon">:</span>
+          <div class="countdown-digit-box">
+            <span class="cd-num" id="cd-secs">00</span>
+            <span class="cd-unit">SEC</span>
+          </div>
+        </div>
+        <div class="countdown-subtext" id="countdown-subtext"></div>
+      </div>
+
+      <div class="squad-section">
+        <div class="squad-box-header">
+          <span class="squad-icon">👋</span>
+          <div>
+            <div class="squad-title">Call the Squad</div>
+            <div class="squad-sub">Instantly invite friends to this room</div>
+          </div>
+        </div>
+        <div class="squad-preview-card">
+          <div class="squad-preview-label">MESSAGE PREVIEW</div>
+          <div class="squad-preview-text" id="squad-preview-text"></div>
+        </div>
+        <div class="squad-actions">
+          <a href="#" class="squad-btn squad-btn-wa" id="squad-wa-btn" target="_blank">
+            WhatsApp
+          </a>
+          <button class="squad-btn squad-btn-copy" id="squad-copy-btn">Copy Text</button>
+          <button class="squad-btn squad-btn-copy hidden" id="squad-share-btn">Share</button>
+        </div>
+      </div>
+
+      <div class="schedule-preview">
+        <div class="schedule-preview-title">Today's Schedule</div>
+        <div class="schedule-slots-list" id="schedule-slots-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-notification hidden" id="toast-notification"></div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>SRM Institute of Science and Technology – Tiruchirappalli Campus · Faculty of Engineering &amp; Technology</p>
+      <p class="footer-note">Based on timetable data for 2024–25 and 2026–27. Weekend/holiday schedules not tracked.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
